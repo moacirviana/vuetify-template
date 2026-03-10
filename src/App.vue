@@ -1,9 +1,8 @@
 <template>
   <v-app theme="dark">
-    <v-navigation-drawer temporary v-model="isDrawerOpen">
+    <v-navigation-drawer v-model="isDrawerOpen">
       <v-list>
-        <v-list-subheader>Menu</v-list-subheader>
-        
+        <v-list-subheader>Menu</v-list-subheader>   
         <v-list-item prepend-icon="mdi-home" link title="Home"></v-list-item>
         <v-divider></v-divider>
         <v-list-item prepend-icon="mdi-account-circle" link title="Usuários"></v-list-item>
@@ -169,5 +168,5 @@
 import { ref } from 'vue';
 
 const isDrawerOpen = ref(false);
-  //
+
 </script>
