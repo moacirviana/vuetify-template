@@ -12,6 +12,7 @@ import Cards from "@/pages/Cards.vue";
 import PageNotFound from "@/pages/PageNotFound.vue";
 import Relatorios from "@/pages/Relatorios.vue";
 import Formularios from "@/pages/Formularios.vue";
+import Login from "@/pages/Login.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,6 +24,10 @@ const router = createRouter({
     {
       path: "/cards",
       component: Cards,
+    },
+    {
+      path: "/login",
+      component: Login,
     },
     {
       path: "/vues",
