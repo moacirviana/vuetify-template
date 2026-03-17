@@ -20,6 +20,7 @@
     "vuetify": "^4.0.0"
   },
   "devDependencies": {
+    "vite-plugin-vue-devtools": "^8.0.3",
     "@tsconfig/node22": "^22.0.5",
     "@types/node": "^22.0.5",
     "@vitejs/plugin-vue": "^6.0.3",
