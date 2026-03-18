@@ -23,13 +23,10 @@ export const useAuthStore = defineStore("auth", {
             password,
           },
         );
-
-        console.log("Stores(auht.ts) token: " + resp.data.data.token);
-        // response já é response.data.data graças ao interceptor
-        //this.token = response.token;
-        //this.username = response.username;
-        //localStorage.setItem("token", response.token);
-        //localStorage.setItem("username", response.username);
+        this.token = resp.data.data.token;
+        this.username = resp.data.data.username;
+        localStorage.setItem("token", this.token);
+        localStorage.setItem("username", this.username);
         return true;
       } catch (error) {
         console.error("Login failed:", error);

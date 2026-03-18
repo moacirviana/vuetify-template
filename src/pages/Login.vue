@@ -31,10 +31,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useAuthStore } from "@/stores/auth";
-//import { useRouter } from 'vue-router'
+import { useRouter } from "vue-router";
+import { useMessagesStore } from "@/stores/app";
+const messages = useMessagesStore();
 
 const authStore = useAuthStore();
-//const router = useRouter()
+const router = useRouter();
 const username = ref("");
 const password = ref("");
 const loading = ref(false);
@@ -45,10 +47,11 @@ const handleLogin = async () => {
   console.log("Login vue success = " + success);
   loading.value = false;
   if (success) {
-    //router.push('/clientes')
-    alert("Credenciais válidas");
+    messages.add({ text: "Login realizado com sucesso!", color: "success" });
+    router.push("/");
+    //alert("Credenciais válidas");
   } else {
-    alert("Credenciais inválidas");
+    messages.add({ text: "Usuário/Senha inválidos!!", color: "error" });
   }
 };
 </script>

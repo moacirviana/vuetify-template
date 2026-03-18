@@ -1,8 +1,17 @@
-// Utilities
-import { defineStore } from 'pinia'
+import { ref } from "vue";
+import { defineStore } from "pinia";
 
-export const useAppStore = defineStore('app', {
-  state: () => ({
-    //
-  }),
-})
+interface IMessage {
+  text: string;
+  color?: string; // cor opcional (ex: 'success', 'error', 'info')
+}
+
+export const useMessagesStore = defineStore("messages", () => {
+  const queue = ref<IMessage[]>([]);
+
+  function add(message: IMessage) {
+    queue.value.push(message);
+  }
+
+  return { queue, add };
+});

@@ -5,7 +5,7 @@
     </template>
     <v-app-bar-title>Template VUE3</v-app-bar-title>
 
-    <template v-slot:append>
+    <template v-slot:append v-if="authStore.isAuthenticated">
       <v-btn icon @click="themeStore.toggleTheme">
         <v-icon>
           {{ themeStore.isDark ? "mdi-weather-sunny" : "mdi-weather-night" }}
@@ -30,18 +30,37 @@
             <v-list-item link to="/forms" title="Profile"></v-list-item>
             <v-list-item link title="Settings"></v-list-item>
             <v-divider></v-divider>
-            <v-list-item link title="Logout"></v-list-item>
+            <v-list-item link @click="handleAuth" title="Logout"></v-list-item>
           </v-list>
         </v-card>
       </v-menu>
     </template>
+    <!-- Login/Logout -->
+    <v-btn icon @click="handleAuth">
+      <v-icon>{{
+        authStore.isAuthenticated ? "mdi-logout" : "mdi-login"
+      }}</v-icon>
+    </v-btn>
   </v-app-bar>
 </template>
 
 <script lang="ts" setup>
 import { useThemeStore } from "@/stores/theme";
+import { useAuthStore } from "@/stores/auth";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const themeStore = useThemeStore();
+const authStore = useAuthStore();
+
+const handleAuth = () => {
+  if (authStore.isAuthenticated) {
+    authStore.logout();
+    router.push("/login");
+  } else {
+    router.push("/login");
+  }
+};
 
 defineEmits(["toggle-drawer"]);
 </script>

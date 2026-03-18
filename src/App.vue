@@ -9,6 +9,12 @@
         <router-view />
       </v-container>
     </v-main>
+    <v-snackbar-queue
+      v-model="messages.queue"
+      closable
+      color=""
+      location="top end"
+    ></v-snackbar-queue>
   </v-app>
 </template>
 
@@ -17,7 +23,9 @@ import { ref } from "vue";
 import { useThemeStore } from "./stores/theme";
 import AppBar from "./components/AppBar.vue";
 import SideMenu from "./components/SideMenu.vue";
+import { useMessagesStore } from "./stores/app";
 
 const themeStore = useThemeStore();
 const isDrawerOpen = ref(false);
+const messages = useMessagesStore();
 </script>
