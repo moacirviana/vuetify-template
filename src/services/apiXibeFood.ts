@@ -1,3 +1,4 @@
+import type { IApiResponse } from "@/interfaces/IApiResponse";
 import axios, {
   type AxiosInstance,
   type InternalAxiosRequestConfig,
@@ -6,7 +7,7 @@ import axios, {
 //import { useAuthStore } from '@/stores/auth'
 //import type { ApiResponse } from '@/types'
 
-const apiElo: AxiosInstance = axios.create({
+const apiXibeFood: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   headers: { "Content-Type": "application/json" },
 });
@@ -23,25 +24,23 @@ api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 
 // Interceptor de resposta: extrai data do wrapper padrão
 /*
-api.interceptors.response.use(
-  (response: AxiosResponse<ApiResponse<any>>) => {
-    const { success, message, data, errors } = response.data
-    
+apiXibeFood.interceptors.response.use(
+  (response: AxiosResponse<IApiResponse<any>>) => {
+    const { success, message, data, errors } = response.data;
+
     if (!success) {
-      return Promise.reject(new Error(message || 'Erro na requisição'))
+      return Promise.reject(new Error(message || "Erro na requisição"));
     }
-    
-    return data // Retorna apenas o conteúdo de "data"
+    return data; // Retorna apenas o conteúdo de "data"
   },
   (error) => {
     if (error.response?.status === 401) {
-      const authStore = useAuthStore()
-      authStore.logout()
-      window.location.href = '/login'
+      //const authStore = useAuthStore()
+      //authStore.logout()
+      window.location.href = "/login";
     }
-    return Promise.reject(error)
-  }
-)
+    return Promise.reject(error);
+  },
+);
 */
-
-export default apiElo;
+export default apiXibeFood;
