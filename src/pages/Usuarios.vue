@@ -4,22 +4,35 @@
     <v-table>
       <thead>
         <tr>
-          <th class="text-left">ID</th>
+          <th class="text-left">TE</th>
           <th class="text-left">Nome</th>
           <th class="text-left">Email</th>
-          <th class="text-left">TE</th>
+          <th class="text-left">Perfil</th>
           <th class="text-left">Menu</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in usuarios" :key="item.id">
-          <td>{{ item.id }}</td>
+          <td>{{ item.tituloEleitor }}</td>
           <td>{{ item.nome }}</td>
           <td>{{ item.email }}</td>
-          <td>{{ item.tituloEleitor }}</td>
           <td>
-            <v-btn variant="outlined" color="primary">Locais</v-btn>
-            <v-btn variant="outlined" color="primary">Modal</v-btn>
+            <v-chip
+              v-for="perfil in item.perfis"
+              :key="perfil"
+              size="small"
+              class="mr-1 mb-1"
+              variant="flat"
+              :color="perfil === 'ADMIN' ? 'primary' : 'secondary'"
+            >
+              {{ perfil }}
+            </v-chip>
+          </td>
+          <td>
+            <v-btn variant="flat" color="primary" density="compact" class="me-1"
+              >Editar</v-btn
+            >
+            <v-btn color="red" density="compact">Excluir</v-btn>
           </td>
         </tr>
       </tbody>

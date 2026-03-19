@@ -31,12 +31,16 @@
           </td>
           <td>
             <v-btn
-              variant="outlined"
+              variant="text"
               color="primary"
+              prepend-icon="mdi-pencil"
               @click="openEditUser(item)"
+              class="me-1"
               >Editar</v-btn
             >
-            <v-btn variant="outlined" color="error">Excluir</v-btn>
+            <v-btn variant="text" prepend-icon="mdi-delete" color="error"
+              >Excluir</v-btn
+            >
           </td>
         </tr>
       </tbody>
