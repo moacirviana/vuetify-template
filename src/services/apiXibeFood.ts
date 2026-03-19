@@ -4,7 +4,7 @@ import axios, {
   type InternalAxiosRequestConfig,
   type AxiosResponse,
 } from "axios";
-//import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from "@/stores/auth";
 //import type { ApiResponse } from '@/types'
 
 const apiXibeFood: AxiosInstance = axios.create({
@@ -13,14 +13,14 @@ const apiXibeFood: AxiosInstance = axios.create({
 });
 
 // Interceptor de requisição: adiciona token
-/*
-api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  const authStore = useAuthStore()
+
+apiXibeFood.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  const authStore = useAuthStore();
   if (authStore.token) {
-    config.headers.Authorization = `Bearer ${authStore.token}`
+    config.headers.Authorization = `Bearer ${authStore.token}`;
   }
-  return config
-}) */
+  return config;
+});
 
 // Interceptor de resposta: extrai data do wrapper padrão
 /*

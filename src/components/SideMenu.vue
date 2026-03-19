@@ -11,7 +11,7 @@
       <v-divider></v-divider>
       <v-list-item
         prepend-icon="mdi-account-circle"
-        to="/cards"
+        to="/usuarios"
         link
         title="Usuários"
       ></v-list-item>
