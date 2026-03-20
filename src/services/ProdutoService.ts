@@ -19,7 +19,9 @@ export class ProdutoService {
     try {
       console.log("Produto = " + produto.valor);
       const response = await apiXibeFood.post<IApiResponse<IProduto>>(
-        "/produtos", produto);
+        "/produtos",
+        produto,
+      );
       return response.data.data;
     } catch (error) {
       throw new Error(`Error: ${error}`);
@@ -30,8 +32,18 @@ export class ProdutoService {
     try {
       console.log("Produto = " + produto.valor);
       const response = await apiXibeFood.put<IApiResponse<IProduto>>(
-        "/produtos", produto);
+        "/produtos",
+        produto,
+      );
       return response.data.data;
+    } catch (error) {
+      throw new Error(`Error: ${error}`);
+    }
+  }
+
+  async delete(id: number): Promise<void> {
+    try {
+      await apiXibeFood.delete<IApiResponse<void>>(`/produtos/${id}`);
     } catch (error) {
       throw new Error(`Error: ${error}`);
     }

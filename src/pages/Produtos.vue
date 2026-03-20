@@ -1,7 +1,7 @@
 <template>
   <v-card flat class="border mb-2" :loading="loading">
     <v-card-title class="d-flex align-center">
-      <v-icon start>mdi-account-group</v-icon>
+      <v-icon start>mdi-cart</v-icon>
       Produtos
       <v-spacer />
       <v-btn
@@ -34,7 +34,9 @@
               class="me-1"
               >Editar</v-btn
             >
-            <v-btn color="red" density="compact">Excluir</v-btn>
+            <v-btn color="red" density="compact" @click="handleDelete(item)"
+              >Excluir</v-btn
+            >
           </td>
         </tr>
       </tbody>
@@ -79,6 +81,7 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
+  <ConfirmDialog />
 </template>
 
 <script setup lang="ts">
@@ -86,6 +89,10 @@ import type { IProduto } from "@/interfaces/IProduto";
 import { onMounted, ref } from "vue";
 import { ProdutoService } from "@/services/ProdutoService";
 import { useMessagesStore } from "@/stores/app";
+import ConfirmDialog from "@/components/common/ConfirmDialog.vue";
+import { useConfirmDialog } from "@/composables/useConfirmDialog";
+const { confirm } = useConfirmDialog();
+
 const dialog = ref(false);
 const formValid = ref(false);
 const messages = useMessagesStore();
@@ -117,7 +124,6 @@ const fetchProdutos = async () => {
 const save = async () => {
   try {
     loading.value = true;
-    console.log("Valor descricao do form = " + form.value?.descricao);
     if (form.value?.id === 0) {
       const novoProduto = await produtoService.insert(form.value);
       produtos.value.push(novoProduto);
@@ -141,6 +147,30 @@ const save = async () => {
   } finally {
     loading.value = false;
     dialog.value = false;
+  }
+};
+
+const handleDelete = async (produto: IProduto) => {
+  editingIndex.value = produtos.value.findIndex((c) => c.id === produto.id);
+  const confirmed = await confirm({
+    title: "Confirmar exclusão",
+    message: `Deseja realmente excluir o produto "${produto.descricao}"? Esta ação não pode ser desfeita.`,
+    confirmText: "Excluir",
+    confirmColor: "error",
+  });
+  if (!confirmed) return;
+  try {
+    await produtoService.delete(produto?.id);
+    produtos.value.splice(editingIndex.value, 1);
+    messages.add({
+      text: "Produto excluído com sucesso!",
+      color: "success",
+    });
+  } catch (err) {
+    messages.add({
+      text: "Erro ao tentar excluir o registro : " + err,
+      color: "error",
+    });
   }
 };
 
