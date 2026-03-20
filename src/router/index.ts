@@ -14,6 +14,7 @@ import Formularios from "@/pages/Formularios.vue";
 import Login from "@/pages/Login.vue";
 import { useAuthStore } from "@/stores/auth";
 import Usuarios from "@/pages/Usuarios.vue";
+import Produtos from "@/pages/Produtos.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,11 @@ const router = createRouter({
     {
       path: "/usuarios",
       component: Usuarios,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: "/produtos",
+      component: Produtos,
       meta: { requiresAuth: true },
     },
     {

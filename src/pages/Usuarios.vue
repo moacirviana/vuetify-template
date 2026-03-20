@@ -1,6 +1,6 @@
 <template>
   <v-card flat class="border mb-4" :loading="loading">
-    <v-card-title>Zonas Eleitorais</v-card-title>
+    <v-card-title>Usuários</v-card-title>
     <v-table>
       <thead>
         <tr>

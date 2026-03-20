@@ -1,0 +1,161 @@
+<template>
+  <v-card flat class="border mb-2" :loading="loading">
+    <v-card-title class="d-flex align-center">
+      <v-icon start>mdi-account-group</v-icon>
+      Produtos
+      <v-spacer />
+      <v-btn
+        color="primary"
+        density="compact"
+        prepend-icon="mdi-plus"
+        @click="openDialog()"
+        >Novo</v-btn
+      >
+    </v-card-title>
+
+    <v-table>
+      <thead>
+        <tr>
+          <th class="text-left">Descricao</th>
+          <th class="text-left">Valor</th>
+          <th class="text-left">Menu</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(item, index) in produtos" :key="index">
+          <td>{{ item.descricao }}</td>
+          <td>{{ item.valor }}</td>
+          <td>
+            <v-btn
+              variant="flat"
+              color="primary"
+              @click="openDialog(item)"
+              density="compact"
+              class="me-1"
+              >Editar</v-btn
+            >
+            <v-btn color="red" density="compact">Excluir</v-btn>
+          </td>
+        </tr>
+      </tbody>
+    </v-table>
+  </v-card>
+
+  <!-- Diálogo de Cadastro/Edição -->
+  <v-dialog v-model="dialog" max-width="500" persistent>
+    <v-card>
+      <v-card-title>
+        {{ form?.id === 0 ? "Novo Produto" : "Editar Produto" }}
+      </v-card-title>
+
+      <v-card-text>
+        <v-form v-model="formValid">
+          <v-text-field
+            v-model="form.descricao"
+            label="Descrição *"
+            prepend-inner-icon="mdi-account"
+          />
+          <v-text-field
+            v-model="form.valor"
+            label="Valor *"
+            prepend-inner-icon="mdi-email"
+            type="email"
+          />
+        </v-form>
+      </v-card-text>
+
+      <v-card-actions>
+        <v-spacer />
+        <v-btn color="error" variant="text" @click="dialog = false"
+          >Cancelar</v-btn
+        >
+        <v-btn
+          color="success"
+          variant="text"
+          @click="save"
+          :disabled="!formValid"
+          >Salvar</v-btn
+        >
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+</template>
+
+<script setup lang="ts">
+import type { IProduto } from "@/interfaces/IProduto";
+import { onMounted, ref } from "vue";
+import { ProdutoService } from "@/services/ProdutoService";
+import { useMessagesStore } from "@/stores/app";
+const dialog = ref(false);
+const formValid = ref(false);
+const messages = useMessagesStore();
+const produtos = ref<IProduto[]>([]);
+const loading = ref(false);
+const produtoService = new ProdutoService();
+const form = ref<IProduto>({} as IProduto);
+const editingIndex = ref(-1);
+
+function closeDialog() {
+  //dialog.value = false;
+  //selectedUser.value = null;
+}
+
+const fetchProdutos = async () => {
+  try {
+    loading.value = true;
+    produtos.value = await produtoService.findAll();
+  } catch (error) {
+    messages.add({
+      text: "Erro ao carregar dados de usuarios",
+      color: "error",
+    });
+  } finally {
+    loading.value = false;
+  }
+};
+
+const save = async () => {
+  try {
+    loading.value = true;
+    console.log("Valor descricao do form = " + form.value?.descricao);
+    if (form.value?.id === 0) {
+      const novoProduto = await produtoService.insert(form.value);
+      produtos.value.push(novoProduto);
+      messages.add({
+        text: "Produto cadastrado com sucesso!",
+        color: "success",
+      });
+    } else {
+      const updatedProduto = await produtoService.update(form.value);
+      produtos.value[editingIndex.value] = updatedProduto;
+      messages.add({
+        text: "Produto editado com sucesso!",
+        color: "success",
+      });
+    }
+  } catch (error) {
+    messages.add({
+      text: "Erro ao tentar salvar o registro : " + error,
+      color: "error",
+    });
+  } finally {
+    loading.value = false;
+    dialog.value = false;
+  }
+};
+
+onMounted(() => {
+  fetchProdutos();
+});
+
+const openDialog = (produto?: IProduto) => {
+  if (produto) {
+    form.value = produto;
+    editingIndex.value = produtos.value.findIndex((c) => c.id === produto.id);
+  } else {
+    form.value = { id: 0, descricao: "", valor: 0 };
+    editingIndex.value = -1;
+  }
+  dialog.value = true;
+};
+</script>

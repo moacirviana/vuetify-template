@@ -44,7 +44,6 @@ const loading = ref(false);
 const handleLogin = async () => {
   loading.value = true;
   const success = await authStore.login(username.value, password.value);
-  console.log("Login vue success = " + success);
   loading.value = false;
   if (success) {
     messages.add({ text: "Login realizado com sucesso!", color: "success" });

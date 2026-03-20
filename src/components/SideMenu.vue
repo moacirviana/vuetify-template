@@ -16,6 +16,12 @@
         title="Usuários"
       ></v-list-item>
       <v-list-item
+        prepend-icon="mdi-account-circle"
+        to="/produtos"
+        link
+        title="Produtos"
+      ></v-list-item>
+      <v-list-item
         prepend-icon="mdi-folder"
         link
         to="/report"
