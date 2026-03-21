@@ -1,5 +1,6 @@
 import apiXibeFood from "./apiXibeFood";
 import type { IApiResponse } from "@/interfaces/IApiResponse";
+import type { PageResponse } from "@/interfaces/IPageResponse";
 import type { IProduto } from "@/interfaces/IProduto";
 
 export class ProdutoService {
@@ -10,6 +11,22 @@ export class ProdutoService {
       const response =
         await apiXibeFood.get<IApiResponse<IProduto[]>>("/produtos");
       return response.data.data;
+    } catch (error) {
+      throw new Error(`Error: ${error}`);
+    }
+  }
+
+  async findAllPageable(
+    page: number = 0,
+    size: number = 5,
+    sort: string = "descricao,asc"
+  ): Promise<PageResponse<IProduto>> {
+    try {
+      const response =
+        await apiXibeFood.get<PageResponse<IProduto>>("/produtos/pages", {
+          params: { page, size, sort }
+        });
+      return response.data;
     } catch (error) {
       throw new Error(`Error: ${error}`);
     }

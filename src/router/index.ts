@@ -15,6 +15,7 @@ import Login from "@/pages/Login.vue";
 import { useAuthStore } from "@/stores/auth";
 import Usuarios from "@/pages/Usuarios.vue";
 import Produtos from "@/pages/Produtos.vue";
+import ProdutoPageble from "@/pages/ProdutoPageble.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
     {
       path: "/produtos",
       component: Produtos,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: "/produtospageable",
+      component: ProdutoPageble,
       meta: { requiresAuth: true },
     },
     {

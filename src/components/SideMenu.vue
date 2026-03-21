@@ -22,6 +22,12 @@
         title="Produtos"
       ></v-list-item>
       <v-list-item
+        prepend-icon="mdi-account-circle"
+        to="/produtospageable"
+        link
+        title="Produtos Pageable"
+      ></v-list-item>
+      <v-list-item
         prepend-icon="mdi-folder"
         link
         to="/report"
