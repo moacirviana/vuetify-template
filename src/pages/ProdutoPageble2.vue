@@ -12,6 +12,10 @@
         :loading="loading"
         item-value="id"
         @update:options="loadPage"
+        sort-asc-icon="mdi-sort-ascending"
+        sort-desc-icon="mdi-sort-descending"
+        sort-icon="mdi-swap-vertical"
+        density="compact"
       >
         <template #item.valor="{ item }">
           {{ formatCurrency((item as any).valor) }}
@@ -35,17 +39,6 @@ const size = ref(10);
 
 // pagination info
 const totalElements = ref(0);
-const totalPages = computed(() => {
-  const tp = Math.ceil(totalElements.value / size.value);
-  return tp > 0 ? tp : 1;
-});
-
-const totalCountText = computed(() => {
-  if (totalElements.value === 0) return "0 produtos";
-  const start = (page.value - 1) * size.value + 1;
-  const end = Math.min(page.value * size.value, totalElements.value);
-  return `${start} - ${end} de ${totalElements.value}`;
-});
 
 const headers = [
   { title: "ID", key: "id" },
@@ -61,19 +54,22 @@ function formatCurrency(value: number) {
   }).format(value);
 }
 
-async function loadPage() {
-  // Spring Pageable geralmente aceita:
-  // - page=0
-  // - size=5
-  // - sort=descricao,asc
-  // como no seu @PageableDefault (sort por descricao ASC).
-  //
-  // Se sua API usa esses nomes de query param, isso funciona.
+async function loadPage(options?: any) {
   loading.value = true;
+
+  // Define ordenação padrão
+  let sortParam = "descricao,asc";
+
+  // Pega as opções de ordenação disparadas pelo v-data-table-server
+  if (options && options.sortBy && options.sortBy.length > 0) {
+    const { key, order } = options.sortBy[0];
+    sortParam = `${key},${order}`; // Ex: "valor,desc"
+  }
+
   const params = {
     page: page.value - 1,
     size: size.value,
-    sort: "descricao,asc",
+    sort: sortParam,
   };
 
   const resp = await produtoService.findAllPageable(
@@ -82,26 +78,10 @@ async function loadPage() {
     params.sort,
   );
 
-  //produtos.value = await produtoService.findAll();
   produtos.value = resp.content;
   page.value = resp.number + 1; // sincroniza caso o backend retorne diferente
   size.value = resp.size;
   totalElements.value = resp.totalElements;
   loading.value = false;
 }
-
-function onPageChange(newPage: number) {
-  page.value = newPage;
-  loadPage();
-}
-
-function onSizeChange() {
-  // normalmente volta pra primeira página ao mudar size
-  page.value = 1;
-  loadPage();
-}
-
-onMounted(() => {
-  loadPage();
-});
 </script>
