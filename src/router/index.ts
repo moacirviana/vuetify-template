@@ -17,6 +17,7 @@ import Usuarios from "@/pages/Usuarios.vue";
 import Produtos from "@/pages/Produtos.vue";
 import ProdutoPageble from "@/pages/ProdutoPageble.vue";
 import ProdutoPageble2 from "@/pages/ProdutoPageble2.vue";
+import FormVenda from "@/pages/FormVenda.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,6 +30,11 @@ const router = createRouter({
     {
       path: "/usuarios",
       component: Usuarios,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: "/formvenda",
+      component: FormVenda,
       meta: { requiresAuth: true },
     },
     {

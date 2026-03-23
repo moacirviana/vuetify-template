@@ -23,9 +23,9 @@
       ></v-list-item>
       <v-list-item
         prepend-icon="mdi-account-circle"
-        to="/produtospageable"
+        to="/formvenda"
         link
-        title="Produtos Pageable"
+        title="Formulário de Venda"
       ></v-list-item>
       <v-list-item
         prepend-icon="mdi-account-circle"
