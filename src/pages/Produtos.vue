@@ -6,10 +6,23 @@
       <v-spacer />
       <v-btn
         color="primary"
+        variant="elevated"
         density="compact"
+        rounded="pill"
+        class="text-label-small mr-2"
         prepend-icon="mdi-plus"
         @click="openDialog()"
         >Novo</v-btn
+      >
+      <v-btn
+        color="secondary"
+        variant="elevated"
+        density="compact"
+        rounded="pill"
+        class="text-label-small"
+        prepend-icon="mdi-book-open-page-variant-outline"
+        @click="openPageableDialog()"
+        >Page</v-btn
       >
     </v-card-title>
 
@@ -45,41 +58,7 @@
 
   <!-- Diálogo de Cadastro/Edição -->
   <v-dialog v-model="dialog" max-width="500" persistent>
-    <v-card>
-      <v-card-title>
-        {{ form?.id === 0 ? "Novo Produto" : "Editar Produto" }}
-      </v-card-title>
-
-      <v-card-text>
-        <v-form v-model="formValid">
-          <v-text-field
-            v-model="form.descricao"
-            label="Descrição *"
-            prepend-inner-icon="mdi-account"
-          />
-          <v-text-field
-            v-model="form.valor"
-            label="Valor *"
-            prepend-inner-icon="mdi-email"
-            type="email"
-          />
-        </v-form>
-      </v-card-text>
-
-      <v-card-actions>
-        <v-spacer />
-        <v-btn color="error" variant="text" @click="dialog = false"
-          >Cancelar</v-btn
-        >
-        <v-btn
-          color="success"
-          variant="text"
-          @click="save"
-          :disabled="!formValid"
-          >Salvar</v-btn
-        >
-      </v-card-actions>
-    </v-card>
+    <FrmCadProduto v-model="form" @cancel="dialog = false" @save="save" />
   </v-dialog>
   <ConfirmDialog />
 </template>
@@ -90,11 +69,12 @@ import { onMounted, ref } from "vue";
 import { ProdutoService } from "@/services/ProdutoService";
 import { useMessagesStore } from "@/stores/app";
 import ConfirmDialog from "@/components/common/ConfirmDialog.vue";
+import FrmCadProduto from "@/components/FrmCadProduto.vue";
 import { useConfirmDialog } from "@/composables/useConfirmDialog";
+import { useRouter } from "vue-router";
+const router = useRouter();
 const { confirm } = useConfirmDialog();
-
 const dialog = ref(false);
-const formValid = ref(false);
 const messages = useMessagesStore();
 const produtos = ref<IProduto[]>([]);
 const loading = ref(false);
@@ -102,9 +82,8 @@ const produtoService = new ProdutoService();
 const form = ref<IProduto>({} as IProduto);
 const editingIndex = ref(-1);
 
-function closeDialog() {
-  //dialog.value = false;
-  //selectedUser.value = null;
+function openPageableDialog() {
+  router.push("/produtospageable2");
 }
 
 const fetchProdutos = async () => {

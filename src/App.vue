@@ -2,7 +2,7 @@
   <v-app :theme="themeStore.isDarkTheme ? 'dark' : 'light'">
     <AppBar @toggle-drawer="isDrawerOpen = !isDrawerOpen" />
 
-    <SideMenu v-model="isDrawerOpen" />
+    <SideMenu v-model="isDrawerOpen" :is-authenticated="authStore.isAuthenticated" />
 
     <v-main>
       <v-container>
@@ -24,8 +24,10 @@ import { useThemeStore } from "./stores/theme";
 import AppBar from "./components/AppBar.vue";
 import SideMenu from "./components/SideMenu.vue";
 import { useMessagesStore } from "./stores/app";
+import { useAuthStore } from "@/stores/auth";
 
 const themeStore = useThemeStore();
 const isDrawerOpen = ref(false);
 const messages = useMessagesStore();
+const authStore = useAuthStore();
 </script>

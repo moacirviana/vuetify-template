@@ -1,8 +1,5 @@
 <template>
-  <v-container
-    class="fill-height d-flex flex-column justify-center"
-    max-width="1100"
-  >
+  <v-container class="fill-height d-flex flex-column">
     <div>
       <v-img
         class="mb-4 font-weight-bold"

@@ -3,7 +3,7 @@
     <template v-slot:prepend>
       <v-app-bar-nav-icon @click="$emit('toggle-drawer')"></v-app-bar-nav-icon>
     </template>
-    <v-app-bar-title>Template VUE3</v-app-bar-title>
+    <v-app-bar-title>XibeFood</v-app-bar-title>
 
     <template v-slot:append v-if="authStore.isAuthenticated">
       <v-btn icon @click="themeStore.toggleTheme">
@@ -27,8 +27,13 @@
         </template>
         <v-card>
           <v-list density="compact">
-            <v-list-item link to="/forms" title="Profile"></v-list-item>
-            <v-list-item link title="Settings"></v-list-item>
+            <v-list-item link to="/profile" title="Profile"></v-list-item>
+            <v-list-item link to="/usuarios" title="Usuários"></v-list-item>
+            <v-list-item
+              link
+              to="/configuracoes"
+              title="Configurações"
+            ></v-list-item>
             <v-divider></v-divider>
             <v-list-item link @click="handleAuth" title="Logout"></v-list-item>
           </v-list>

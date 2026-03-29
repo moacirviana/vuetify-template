@@ -10,31 +10,19 @@
       ></v-list-item>
       <v-divider></v-divider>
       <v-list-item
-        prepend-icon="mdi-account-circle"
-        to="/usuarios"
-        link
-        title="Usuários"
-      ></v-list-item>
-      <v-list-item
-        prepend-icon="mdi-account-circle"
+        prepend-icon="mdi-gift-outline"
         to="/produtos"
         link
         title="Produtos"
       ></v-list-item>
       <v-list-item
-        prepend-icon="mdi-account-circle"
+        prepend-icon="mdi-tag-plus-outline"
         to="/formvenda"
         link
-        title="Formulário de Venda"
+        title="Vendas"
       ></v-list-item>
       <v-list-item
-        prepend-icon="mdi-account-circle"
-        to="/produtospageable2"
-        link
-        title="Produtos Pageable 2"
-      ></v-list-item>
-      <v-list-item
-        prepend-icon="mdi-folder"
+        prepend-icon="mdi-finance"
         link
         to="/report"
         title="Relatórios"
@@ -55,26 +43,31 @@
           />
         </template>
         <v-list-item
-          prepend-icon="mdi-map-outline"
+          prepend-icon="mdi-account-tie"
           title="Perfil"
           to="/forms"
         ></v-list-item>
         <v-list-item
           prepend-icon="mdi-file-chart"
-          title="Segurança"
+          title="Zonas"
+          to="/zonas"
         ></v-list-item>
       </v-list-group>
-
-      <v-list-item
-        prepend-icon="mdi-lock"
+      <!--      <v-list-item
+        :prepend-icon="isAuthenticated ? 'mdi-logout' : 'mdi-login'"
         to="/login"
         link
-        title="Login"
-      ></v-list-item>
+        :title="isAuthenticated ? 'Logout' : 'Login'"
+      ></v-list-item> -->
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <script lang="ts" setup>
 const isDrawerOpen = defineModel<boolean>("modelValue", { required: true });
+/*
+defineProps<{
+  isAuthenticated: boolean;
+}>();
+*/
 </script>
