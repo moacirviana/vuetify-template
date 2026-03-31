@@ -25,4 +25,37 @@ export class UsuarioService {
       throw new Error(`Error: ${error}`);
     }
   }
+
+  async findAllParaDistribuir(): Promise<IUsuario[]> {
+    try {
+      const response = await apiXibeFood.get<IApiResponse<IUsuario[]>>(
+        "/usuarios/lstParaDistribuir",
+      );
+      return response.data.data;
+    } catch (error) {
+      throw new Error(`Error: ${error}`);
+    }
+  }
+
+  async addPerfil(usuario: IUsuario): Promise<IUsuario> {
+    try {
+      const response = await apiXibeFood.put<IApiResponse<IUsuario>>(
+        "/usuarios",
+        usuario,
+      );
+      return response.data.data;
+    } catch (error) {
+      throw new Error(`Error: ${error}`);
+    }
+  }
+
+  async removePerfil(usuario: IUsuario): Promise<void> {
+    try {
+      const response = await apiXibeFood.delete<void>(
+        `/usuarios/remove/perfis/${usuario.id}`,
+      );
+    } catch (error) {
+      throw new Error(`Error: ${error}`);
+    }
+  }
 }
