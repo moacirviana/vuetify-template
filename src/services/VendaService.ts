@@ -1,15 +1,15 @@
 import apiXibeFood from "./apiXibeFood";
 import type { IApiResponse } from "@/interfaces/IApiResponse";
 import type { PageResponse } from "@/interfaces/IPageResponse";
-import type { IVendaDTO } from "@/interfaces/IVendaDTO";
+import type { IVendaDTO, IVWVendaDTO } from "@/interfaces/IVendaDTO";
 
 export class VendaService {
   constructor() {}
 
-  async findAll(): Promise<IVendaDTO[]> {
+  async findAll(): Promise<IVWVendaDTO[]> {
     try {
       const response =
-        await apiXibeFood.get<IApiResponse<IVendaDTO[]>>("/vendas");
+        await apiXibeFood.get<IApiResponse<IVWVendaDTO[]>>("/vendas");
       return response.data.data;
     } catch (error) {
       throw new Error(`Error: ${error}`);

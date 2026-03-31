@@ -23,3 +23,10 @@ export interface IProdutoDTO {
 export interface IUsuarioDTO {
   id: number;
 }
+
+export interface IVWVendaDTO {
+  id: number;
+  date: string;
+  nomeUsuario: string;
+  total: number;
+}
