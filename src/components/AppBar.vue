@@ -28,7 +28,12 @@
         <v-card>
           <v-list density="compact">
             <v-list-item link to="/profile" title="Profile"></v-list-item>
-            <v-list-item link to="/usuarios" title="Usuários"></v-list-item>
+            <v-list-item
+              v-if="authStore.isAdmin"
+              link
+              to="/usuarios"
+              title="Usuários"
+            ></v-list-item>
             <v-list-item
               link
               to="/configuracoes"

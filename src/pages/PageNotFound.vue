@@ -6,8 +6,8 @@
     <div>
       <v-empty-state
         headline="Ooops, 404"
-        title="Página ou Recurso não encontrado"
-        text="A página que você está procurando não existe"
+        title="Página ou Recurso não encontrado!"
+        text="A página que você está procurando não existe ou você não tem permissão para acessá-la"
         image="/brasao.png"
       ></v-empty-state>
     </div>

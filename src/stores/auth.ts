@@ -8,9 +8,11 @@ export const useAuthStore = defineStore("auth", {
   state: (): IAuthState => ({
     token: localStorage.getItem("token"),
     username: localStorage.getItem("username"),
+    admin: localStorage.getItem("admin") === "true",
   }),
   getters: {
     isAuthenticated: (state) => !!state.token,
+    isAdmin: (state) => state.admin,
   },
   actions: {
     async login(username: string, password: string) {
@@ -25,8 +27,10 @@ export const useAuthStore = defineStore("auth", {
         );
         this.token = resp.data.data.token;
         this.username = resp.data.data.username;
+        this.admin = resp.data.data.admin;
         localStorage.setItem("token", this.token);
         localStorage.setItem("username", this.username);
+        localStorage.setItem("admin", this.admin.toString());
         return true;
       } catch (error) {
         console.error("Login failed:", error);
@@ -36,8 +40,10 @@ export const useAuthStore = defineStore("auth", {
     logout() {
       this.token = null;
       this.username = null;
+      this.admin = false;
       localStorage.removeItem("token");
       localStorage.removeItem("username");
+      localStorage.removeItem("admin");
     },
   },
 });
